@@ -10,4 +10,4 @@ databaseChangeLog:
         relativeToChangelogFile: true
   - include:
       file: migrations/004_create_table_drivers_25_01_2021.xml
-      relativeToChangelogFile: true
+      regitlativeToChangelogFile: true

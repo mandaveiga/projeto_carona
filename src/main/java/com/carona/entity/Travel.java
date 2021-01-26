@@ -1,4 +1,4 @@
-package com.carona.model;
+package com.carona.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
