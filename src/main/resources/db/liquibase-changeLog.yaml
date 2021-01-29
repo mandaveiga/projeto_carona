@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: changelog/001_create_table_users_25_01_2021.xml
+      relativeToChangelogFile: true
