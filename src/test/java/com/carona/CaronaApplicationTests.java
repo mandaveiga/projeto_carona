@@ -1,4 +1,4 @@
-package com.carona.controller;
+package com.carona;
 
 import com.jayway.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,6 @@
 package com.carona.controller;
 
-
+import com.carona.CaronaApplicationTests;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
