@@ -1,6 +1,6 @@
 package com.carona.controller.valid;
 
-import com.carona.DTO.UserDTO;
+import com.carona.dto.UserDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

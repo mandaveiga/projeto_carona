@@ -1,8 +1,7 @@
 package com.carona.controller;
 
-import com.carona.DTO.UserDTO;
+import com.carona.dto.UserDTO;
 import com.carona.controller.valid.UserValidator;
-import com.carona.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

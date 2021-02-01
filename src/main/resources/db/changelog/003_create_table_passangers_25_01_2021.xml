@@ -6,8 +6,8 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet author="amanda" id="003">
         <createTable tableName="passangers">
-            <column name="id" type="int">
-                <constraints nullable="true" primaryKey="true" unique="true"/>
+            <column name="id" autoIncrement="true" type="BIGINT" >
+                <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="user_id" type="int">
                 <constraints nullable="false" primaryKey="false" unique="false"/>

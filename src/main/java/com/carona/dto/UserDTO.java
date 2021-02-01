@@ -1,4 +1,4 @@
-package com.carona.DTO;
+package com.carona.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
