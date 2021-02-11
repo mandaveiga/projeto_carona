@@ -1,10 +1,10 @@
 package com.carona.service;
 
-import org.springframework.stereotype.Service;
+import com.carona.dto.UserDTO;
+import com.carona.entity.User;
 
-@Service
-public class UserService {
+import java.util.Optional;
 
-
-
+public interface UserService {
+    Optional<User> save(UserDTO body);
 }
