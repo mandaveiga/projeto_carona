@@ -6,15 +6,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "drivers")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Driver extends User{
+public class Driver{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
+//    @Column(name="travel_id")
     private Travel travel;
 
+    @Column
+    private Long user_id;
 }

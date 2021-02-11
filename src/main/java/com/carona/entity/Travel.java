@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "travels")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Travel {
