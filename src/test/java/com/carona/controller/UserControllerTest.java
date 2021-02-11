@@ -29,7 +29,7 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void shouldReturnUser() {
+    public void shouldReturnUser_whenToCreate() {
         String body = "{\n" +
                 "    \"name\": \"jose\",\n" +
                 "    \"email\": \"jose@gmail.com\"\n" +
@@ -47,7 +47,7 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void shouldReturnBadRequest() {
+    public void shouldReturnBadRequest_whenToCreate() {
         String body = "{}";
 
         Integer statusCode = RestAssured.given().body(body)
@@ -60,7 +60,7 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void givenNameNullThenShouldReturnBadRequest() {
+    public void givenNameNullThenShouldReturnBadRequest_whenToCreate() {
         String body = "{\n" +
                 "    \"name\": null,\n" +
                 "    \"email\": \"jose@gmail.com\"\n" +
@@ -76,7 +76,7 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void givenEmailNullThenShouldReturnBadRequest() {
+    public void givenEmailNullThenShouldReturnBadRequest_whenToCreate() {
         String body = "{\n" +
                 "    \"name\": \"jose\",\n" +
                 "    \"email\": null\n" +
