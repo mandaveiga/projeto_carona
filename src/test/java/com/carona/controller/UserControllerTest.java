@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserControllerTest extends CaronaApplicationTests {
 
     @Test
-    public void shouldReturnCreated() {
+    public void whenToSaveThenReturnCreated() {
         String body = "{\n" +
                 "    \"name\": \"jose\",\n" +
                 "    \"email\": \"jose@gmail.com\"\n" +
@@ -29,7 +29,7 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void shouldReturnUser_whenToCreate() {
+    public void whereToSaveThenReturnUser(){
         String body = "{\n" +
                 "    \"name\": \"jose\",\n" +
                 "    \"email\": \"jose@gmail.com\"\n" +
@@ -47,7 +47,7 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void shouldReturnBadRequest_whenToCreate() {
+    public void givenEmptyBodyWhereToSaveThenReturnBadRequest() {
         String body = "{}";
 
         Integer statusCode = RestAssured.given().body(body)
@@ -60,7 +60,7 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void givenNameNullThenShouldReturnBadRequest_whenToCreate() {
+    public void giveNameNullWhereToSaveThenReturnBadRequest() {
         String body = "{\n" +
                 "    \"name\": null,\n" +
                 "    \"email\": \"jose@gmail.com\"\n" +
@@ -76,7 +76,7 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void givenEmailNullThenShouldReturnBadRequest_whenToCreate() {
+    public void givenEmailNullWhereToSaveThenReturnBadRequest() {
         String body = "{\n" +
                 "    \"name\": \"jose\",\n" +
                 "    \"email\": null\n" +

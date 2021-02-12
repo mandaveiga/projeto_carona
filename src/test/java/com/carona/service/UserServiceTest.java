@@ -18,7 +18,7 @@ class UserServiceTest extends CaronaApplicationTests {
     UserService service;
 
     @Test
-    public void shouldReturnUse_whenToSave() {
+    public void whenToSaveThenReturnUser() {
         UserDTO userDTO = new UserDTO("ana", "ana@teste.com");
 
         Optional<User> entity = service.save(userDTO);
@@ -28,7 +28,7 @@ class UserServiceTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void givenDuplicEmailThenShouldThrowBadResourceExcepion_whenToSave(){
+    public void givenDuplicateEmailWhenToSaveThenReturnBadRequest(){
         UserDTO userDTO = new UserDTO("ana", "ana@teste.com");
 
         try{
