@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "travels")
@@ -25,9 +26,14 @@ public class Travel {
     @Column(nullable = false)
     private int max_passangers;
 
-    @OneToMany( targetEntity=Passanger.class )
-    private List passangers;
+    @JoinTable(
+            name = "travels_passangers",
+            joinColumns = @JoinColumn(name = "travel_id"),
+            inverseJoinColumns = @JoinColumn(name = "passanger_id"))
+    @ManyToMany
+    Set<Passanger> passangers;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name="driver_id")
     private Driver driver;
 }

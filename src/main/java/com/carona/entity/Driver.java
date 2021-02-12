@@ -15,10 +15,8 @@ public class Driver{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-//    @Column(name="travel_id")
-    private Travel travel;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    @Column
-    private Long user_id;
 }

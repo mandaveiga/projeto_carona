@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "passangers")
@@ -15,10 +16,10 @@ public class Passanger{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-//    @Column(name="travel_id")
-    private Travel travel;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    @Column
-    private Long user_id;
+    @ManyToMany(mappedBy = "passangers")
+    Set<Travel> travels;
 }
