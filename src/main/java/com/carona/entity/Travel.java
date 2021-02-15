@@ -1,6 +1,7 @@
 package com.carona.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Table(name = "travels")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class Travel {
 
     @Id

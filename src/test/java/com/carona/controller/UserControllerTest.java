@@ -12,24 +12,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserControllerTest extends CaronaApplicationTests {
 
+    private String recurso = "/users";
+
     @Test
-    public void whenToSaveThenReturnCreated() {
+    public void giveUserWhenToSaveThenReturnCreated() {
         String body = "{\n" +
-                "    \"name\": \"jose\",\n" +
-                "    \"email\": \"jose@gmail.com\"\n" +
+                "    \"name\": \"any\",\n" +
+                "    \"email\": \"any@teste.com\"\n" +
                 "}";
 
         Integer statusCode = RestAssured.given().body(body)
                 .when()
                 .contentType(ContentType.JSON)
-                .post("/users")
+                .post(recurso)
                 .then().extract().statusCode();
 
         assertThat(statusCode).isEqualTo(HttpStatus.CREATED.value());
     }
 
     @Test
-    public void whereToSaveThenReturnUser(){
+    public void whenToSaveThenReturnUser(){
         String body = "{\n" +
                 "    \"name\": \"jose\",\n" +
                 "    \"email\": \"jose@gmail.com\"\n" +
@@ -38,7 +40,7 @@ public class UserControllerTest extends CaronaApplicationTests {
         String emailResponse = RestAssured.given().body(body)
                 .when()
                 .contentType(ContentType.JSON)
-                .post("/users")
+                .post(recurso)
                 .then()
                 .extract()
                 .path("email").toString();
@@ -47,20 +49,20 @@ public class UserControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void givenEmptyBodyWhereToSaveThenReturnBadRequest() {
+    public void givenEmptyBodyWhenToSaveThenReturnBadRequest() {
         String body = "{}";
 
         Integer statusCode = RestAssured.given().body(body)
                 .when()
                 .contentType(ContentType.JSON)
-                .post("/users")
+                .post(recurso)
                 .then().extract().statusCode();
 
         assertThat(statusCode).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    public void giveNameNullWhereToSaveThenReturnBadRequest() {
+    public void giveNameNullWhenToSaveThenReturnBadRequest() {
         String body = "{\n" +
                 "    \"name\": null,\n" +
                 "    \"email\": \"jose@gmail.com\"\n" +
@@ -69,14 +71,14 @@ public class UserControllerTest extends CaronaApplicationTests {
         Integer statusCode = RestAssured.given().body(body)
                 .when()
                 .contentType(ContentType.JSON)
-                .post("/users")
+                .post(recurso)
                 .then().extract().statusCode();
 
         assertThat(statusCode).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    public void givenEmailNullWhereToSaveThenReturnBadRequest() {
+    public void givenEmailNullWhenToSaveThenReturnBadRequest() {
         String body = "{\n" +
                 "    \"name\": \"jose\",\n" +
                 "    \"email\": null\n" +
@@ -85,7 +87,7 @@ public class UserControllerTest extends CaronaApplicationTests {
         Integer statusCode = RestAssured.given().body(body)
                 .when()
                 .contentType(ContentType.JSON)
-                .post("/users")
+                .post(recurso)
                 .then().extract().statusCode();
 
         assertThat(statusCode).isEqualTo(HttpStatus.BAD_REQUEST.value());

@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface UserService {
     Optional<User> save(UserDTO body);
+
+    Optional<User> findById(Long id);
 }
