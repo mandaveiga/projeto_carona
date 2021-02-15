@@ -24,4 +24,8 @@ public class Passanger{
 
     @ManyToMany(mappedBy = "passangers")
     Set<Travel> travels;
+
+    public Passanger(User user) {
+        this.user = user;
+    }
 }

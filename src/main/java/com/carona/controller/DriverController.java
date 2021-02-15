@@ -1,9 +1,8 @@
 package com.carona.controller;
 
 import com.carona.controller.valid.DriverValidator;
-import com.carona.dto.DriverDto;
+import com.carona.dto.DriverDTO;
 import com.carona.entity.Driver;
-import com.carona.entity.User;
 import com.carona.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody DriverDto body, @NotNull BindingResult result){
+    public ResponseEntity<Object> create(@RequestBody DriverDTO body, @NotNull BindingResult result){
         validator.validate(body, result);
 
         Optional<Driver> entity = driverService.save(body);

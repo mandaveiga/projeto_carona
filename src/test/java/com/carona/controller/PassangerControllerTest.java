@@ -8,12 +8,12 @@ import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DriverControllerTest extends CaronaApplicationTests {
+public class PassangerControllerTest extends CaronaApplicationTests {
 
-    private String recurso = "/drivers";
+    private String recurso = "/passangers";
 
     @Test
-    public void givenDriverWhenToSaveThenReturnCreated() {
+    public void givePassangerWhenToSaveThenReturnCreated(){
         String body = "{\n" +
                 "    \"userId\": 1 \n" +
                 "}";
@@ -28,7 +28,7 @@ public class DriverControllerTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void givenDriverWhenToSaveThenReturnDriver() {
+    public void givePassangerWhenToSaveThenReturnPassanger(){
         int idUserRequest = 1;
 
         String body = "{\n" +
@@ -60,3 +60,4 @@ public class DriverControllerTest extends CaronaApplicationTests {
         assertThat(statusCode).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 }
+

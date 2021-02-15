@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class DriverDto {
+public class PassangerDTO {
     private Long userId;
 }
