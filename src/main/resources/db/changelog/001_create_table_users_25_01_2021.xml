@@ -13,7 +13,7 @@
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
             <column name="email" type="varchar(155)">
-                <constraints nullable="true" primaryKey="false" unique="false"/>
+                <constraints nullable="true" primaryKey="false" unique="true"/>
             </column>
         </createTable>
         <rollback>

@@ -4,14 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class UserDTO {
-
-    private String name;
-
-    private String email;
+public class DriverDto {
+    private Long userId;
 }

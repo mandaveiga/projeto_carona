@@ -27,13 +27,11 @@ public class UserController {
     public ResponseEntity<Object> create(@RequestBody UserDTO body, @NotNull BindingResult result) {
         validator.validate(body, result);
 
-        if (result.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(result.getAllErrors().get(0).getCode());
-        }
-
         Optional<User> entity = service.save(body);
 
+        if(!entity.isPresent()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entity);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(entity);
     }
 }

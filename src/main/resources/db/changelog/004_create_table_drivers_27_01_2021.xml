@@ -9,11 +9,8 @@
             <column name="id" autoIncrement="true" type="BIGINT" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user_id" type="int">
-                <constraints nullable="false" primaryKey="false" unique="false"/>
-            </column>
-            <column name="travel_id" type="int">
-                <constraints nullable="false" primaryKey="false" unique="false"/>
+            <column name="user_id" autoIncrement="false" type="BIGINT" >
+                <constraints primaryKey="false" nullable="false"/>
             </column>
         </createTable>
         <addForeignKeyConstraint baseColumnNames="user_id"
@@ -21,11 +18,6 @@
                                  constraintName="fk_driver_user"
                                  referencedColumnNames="id"
                                  referencedTableName="users"/>
-        <addForeignKeyConstraint baseColumnNames="travel_id"
-                                 baseTableName="drivers"
-                                 constraintName="fk_driver_travel"
-                                 referencedColumnNames="id"
-                                 referencedTableName="travels"/>
         <rollback>
             <dropTable tableName="drivers"/>
         </rollback>
