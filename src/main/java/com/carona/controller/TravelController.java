@@ -1,9 +1,9 @@
 package com.carona.controller;
 
-import com.carona.controller.valid.DriverValidator;
-import com.carona.dto.DriverDTO;
-import com.carona.entity.Driver;
-import com.carona.service.DriverService;
+import com.carona.controller.valid.TravelValidator;
+import com.carona.dto.TravelDTO;
+import com.carona.entity.Travel;
+import com.carona.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,25 +17,26 @@ import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/drivers")
-public class DriverController {
+@RequestMapping("/travels")
+public class TravelController {
 
     @Autowired
-    private DriverValidator validator;
+    private TravelValidator validator;
 
     @Autowired
-    private DriverService driverService;
+    private TravelService service;
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody DriverDTO body, @NotNull BindingResult result){
+    public ResponseEntity<Travel> create(@RequestBody TravelDTO body, @NotNull BindingResult result){
         validator.validate(body, result);
 
-        Optional<Driver> entity = driverService.save(body);
+        Optional<Travel> entity = service.save(body);
 
         if(!entity.isPresent()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity.get());
     }
+
 }

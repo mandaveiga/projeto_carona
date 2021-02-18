@@ -32,6 +32,6 @@ public class DriverServiceImpl implements DriverService {
 
         Driver driver = driverRepository.save(new Driver(user.get()));
 
-        return Optional.of(driver);
+        return Optional.ofNullable(driver);
     }
 }

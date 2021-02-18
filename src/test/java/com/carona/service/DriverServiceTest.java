@@ -22,7 +22,7 @@ public class DriverServiceTest extends CaronaApplicationTests {
     UserService userService;
 
     @Test
-    public void givenUserWhenToSaveThenReturnCreated(){
+    public void givenUserWhenToSaveThenReturnDriver(){
         String email = "amora@teste.com";
 
         UserDTO userDto = new UserDTO("ana", email);

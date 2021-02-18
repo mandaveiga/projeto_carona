@@ -1,10 +1,8 @@
 package com.carona.controller;
 
 import com.carona.CaronaApplicationTests;
-import com.carona.entity.User;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.ResponseBodyExtractionOptions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 

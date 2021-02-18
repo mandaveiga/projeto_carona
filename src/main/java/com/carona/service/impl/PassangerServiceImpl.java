@@ -33,6 +33,6 @@ public class PassangerServiceImpl implements PassangerService {
 
         Passanger passanger = repository.save(new Passanger(user.get()));
 
-        return Optional.of(passanger);
+        return Optional.ofNullable(passanger);
     }
 }

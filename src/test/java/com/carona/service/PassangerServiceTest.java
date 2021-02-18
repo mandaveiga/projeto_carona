@@ -23,7 +23,7 @@ public class PassangerServiceTest extends CaronaApplicationTests {
     UserService userService;
 
     @Test
-    public void WhenToSaveThenReturnCreated(){
+    public void WhenToSaveThenReturnPassanger(){
         String email = "amora@teste.com";
 
         UserDTO userDto = new UserDTO("ana", email);

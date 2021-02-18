@@ -25,17 +25,25 @@ public class Travel {
     @Column(nullable = false)
     private boolean open;
 
-    @Column(nullable = false)
-    private int max_passangers;
+    @Column(nullable = false, name = "max_passangers")
+    private int maxPassangers;
 
     @JoinTable(
             name = "travels_passangers",
             joinColumns = @JoinColumn(name = "travel_id"),
             inverseJoinColumns = @JoinColumn(name = "passanger_id"))
-    @ManyToMany
-    Set<Passanger> passangers;
+    @ManyToMany(fetch = FetchType.LAZY)
+    List<Passanger> passangers;
 
     @ManyToOne
     @JoinColumn(name="driver_id")
     private Driver driver;
+
+    public Travel(Long value , boolean open , int maxPassangers , List<Passanger> passangers , Driver driver) {
+        this.value = value;
+        this.open = open;
+        this.maxPassangers = maxPassangers;
+        this.passangers = passangers;
+        this.driver = driver;
+    }
 }

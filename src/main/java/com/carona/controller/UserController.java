@@ -30,7 +30,7 @@ public class UserController {
         Optional<User> entity = service.save(body);
 
         if(!entity.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entity);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(entity);
     }
