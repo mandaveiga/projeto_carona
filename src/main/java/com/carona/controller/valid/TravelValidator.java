@@ -1,17 +1,15 @@
 package com.carona.controller.valid;
 
+import com.carona.dto.TravelDTO;
 import com.carona.dto.UserDTO;
 import com.carona.error.BadResourceExcepion;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
-public class UserValidator implements Validator {
-
+public class TravelValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
         return false;
@@ -19,10 +17,11 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        UserDTO user = (UserDTO) o;
+        TravelDTO travel = (TravelDTO) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Name is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "email is required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "maxPassangers", "max passangers is required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "value", "value is required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "driverId", "driver is required");
 
         hasErros(errors);
     }

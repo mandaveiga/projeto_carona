@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="amanda" id="005">
+        <createTable tableName="travels_passangers">
+            <column name="id" autoIncrement="true" type="BIGINT" >
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="passanger_id" autoIncrement="false" type="BIGINT" >
+                <constraints primaryKey="false" nullable="false"/>
+            </column>
+            <column name="travel_id" autoIncrement="false" type="BIGINT" >
+                <constraints primaryKey="false" nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="passanger_id"
+                                 baseTableName="travels_passangers"
+                                 constraintName="fk_travels_passangers_passangers"
+                                 referencedColumnNames="id"
+                                 referencedTableName="passangers"/>
+        <addForeignKeyConstraint baseColumnNames="travel_id"
+                                 baseTableName="travels_passangers"
+                                 constraintName="fk_travels_passangers_travels"
+                                 referencedColumnNames="id"
+                                 referencedTableName="travels"/>
+        <rollback>
+            <dropTable tableName="travels_passangers"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

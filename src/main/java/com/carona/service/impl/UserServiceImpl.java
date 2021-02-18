@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> save(UserDTO body) {
-
         Optional<User> user = userRepository.findByEmail(body.getEmail());
 
         if(user.isPresent()){
@@ -29,5 +28,10 @@ public class UserServiceImpl implements UserService {
         User entity = userRepository.save(new User(body.getName(), body.getEmail()));
 
         return Optional.ofNullable(entity);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 }

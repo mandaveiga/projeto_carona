@@ -18,7 +18,15 @@
             <column name="open" type="boolean">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
+            <column name="driver_id" autoIncrement="false" type="BIGINT" >
+                <constraints primaryKey="false" nullable="false"/>
+            </column>
         </createTable>
+        <addForeignKeyConstraint baseColumnNames="driver_id"
+                                 baseTableName="travels"
+                                 constraintName="fk_travels_drivers"
+                                 referencedColumnNames="id"
+                                 referencedTableName="drivers"/>
         <rollback>
             <dropTable tableName="travels"/>
         </rollback>
