@@ -27,15 +27,14 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody DriverDTO body, @NotNull BindingResult result){
+    public ResponseEntity<Driver> create(@RequestBody DriverDTO body, @NotNull BindingResult result){
         validator.validate(body, result);
 
-        Optional<Driver> entity = driverService.save(body);
+        Optional<Driver> entityOptional = driverService.save(body);
 
-        if(!entity.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        return entityOptional.map((entity) -> {
+            return ResponseEntity.status(HttpStatus.CREATED).body(entity);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+        }).orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }

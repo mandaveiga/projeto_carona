@@ -1,6 +1,7 @@
 package com.carona.service;
 
 import com.carona.dto.UserDTO;
+import com.carona.entity.Driver;
 import com.carona.entity.User;
 
 import java.util.Optional;

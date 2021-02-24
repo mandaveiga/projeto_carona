@@ -30,10 +30,11 @@ public class TravelServiceimpl implements TravelService {
     @Override
     public Optional<Travel> save(TravelDTO body) {
 
-        Optional<Driver> driver = driverRepository.findById(body.getDriverId());
-        if(!driver.isPresent()){
-            throw new BadResourceExcepion("driver with id " +body.getDriverId() + " not found");
-        }
+        Optional<Driver> driverOptional = driverRepository.findById(body.getDriverId());
+
+        Optional<Driver> driver = driverOptional.map(d-> {
+            return Optional.ofNullable(d);
+        }).orElseThrow(()-> new BadResourceExcepion("driver with id " +body.getDriverId() + " not found"));
 
         body.getPassangers()
                 .stream()
@@ -43,8 +44,7 @@ public class TravelServiceimpl implements TravelService {
                 });
 
         List<Passanger> passangers = (List<Passanger>) passangerRepository.findAllById(body.getPassangers());
-        Travel travel = repository.save(new Travel(body.getValue(), true, body.getMaxPassangers(), passangers, driver.get()));
 
-        return Optional.ofNullable(travel);
+        return Optional.ofNullable(repository.save(new Travel(body.getValue(), true, body.getMaxPassangers(), passangers, driver.get())));
     }
 }

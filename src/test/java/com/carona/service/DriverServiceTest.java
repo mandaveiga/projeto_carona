@@ -2,6 +2,7 @@ package com.carona.service;
 
 import com.carona.CaronaApplicationTests;
 import com.carona.dto.DriverDTO;
+import com.carona.dto.PassangerDTO;
 import com.carona.dto.UserDTO;
 import com.carona.entity.Driver;
 import com.carona.entity.User;
@@ -16,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DriverServiceTest extends CaronaApplicationTests {
 
     @Autowired
-    DriverService driverService;
+    DriverService service;
 
     @Autowired
     UserService userService;
@@ -29,7 +30,7 @@ public class DriverServiceTest extends CaronaApplicationTests {
         Optional<User> user = userService.save(userDto);
 
         DriverDTO driverDto = new DriverDTO(user.get().getId());
-        Optional<Driver> driver = driverService.save(driverDto);
+        Optional<Driver> driver = service.save(driverDto);
 
         assertThat(driver.get().getUser().getEmail()).isEqualTo(email);
     }
@@ -41,9 +42,25 @@ public class DriverServiceTest extends CaronaApplicationTests {
         DriverDTO driverDto = new DriverDTO(idInvalid);
 
         try{
-            Optional<Driver> entity = driverService.save(driverDto);
+            Optional<Driver> entity = service.save(driverDto);
         }catch (BadResourceExcepion e){
             assertThat("user with id " +idInvalid + " not found").isEqualTo(e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenDuplicateDriverWhenToSaveThenReturnExcepion(){
+        String email = "samira@teste.com";
+        UserDTO userDto = new UserDTO("samira", email );
+        Optional<User> user = userService.save(userDto);
+
+        service.save(new DriverDTO(user.get().getId()));
+
+        try{
+            service.save(new DriverDTO(user.get().getId()));
+
+        }catch (BadResourceExcepion e){
+            assertThat("Driver already registered: " + email).isEqualTo(e.getMessage());
         }
     }
 }

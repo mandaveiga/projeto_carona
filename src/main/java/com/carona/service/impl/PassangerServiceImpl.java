@@ -25,14 +25,21 @@ public class PassangerServiceImpl implements PassangerService {
 
     @Override
     public Optional<Passanger> save(PassangerDTO body) {
-        Optional<User> user = userService.findById(body.getUserId());
 
-        if(!user.isPresent()){
-            throw new BadResourceExcepion("user with id " +body.getUserId() + " not found");
-        }
+        Optional<User> userOptional = userService.findById(body.getUserId());
 
-        Passanger passanger = repository.save(new Passanger(user.get()));
+        return Optional.of((Passanger) userOptional
+                .map((user -> {
 
-        return Optional.ofNullable(passanger);
+                    Optional<Passanger> passangerOptional = repository.findByUserId(body.getUserId());
+
+                    return passangerOptional.map((passanger -> {
+                        throw new BadResourceExcepion("Passanger already registered: " + user.getEmail());
+
+                    }))
+                    .orElse(repository.save(new Passanger(user)));
+
+                }))
+                .orElseThrow(()-> new BadResourceExcepion("user with id " +body.getUserId() + " not found")));
     }
 }

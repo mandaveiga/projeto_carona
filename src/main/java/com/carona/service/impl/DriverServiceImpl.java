@@ -16,22 +16,28 @@ import java.util.Optional;
 public class DriverServiceImpl implements DriverService {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    DriverRepository driverRepository;
+    private DriverRepository repository;
+
 
     @Override
-    public Optional<Driver> save(DriverDTO body) {
+    public Optional<Driver> save(DriverDTO body){
 
-        Optional<User> user = userService.findById(body.getUserId());
+        Optional<User> userOptional = userService.findById(body.getUserId());
 
-        if(!user.isPresent()){
-            throw new BadResourceExcepion("user with id " +body.getUserId() + " not found");
-        }
+        return Optional.of((Driver) userOptional
+                .map((user) -> {
 
-        Driver driver = driverRepository.save(new Driver(user.get()));
+                    Optional<Driver> driverOptional = repository.findByUserId(body.getUserId());
 
-        return Optional.ofNullable(driver);
+                    return driverOptional.map((driver -> {
+                        throw new BadResourceExcepion("Driver already registered: " + user.getEmail());
+
+                    })).orElse(repository.save(new Driver(user)));
+
+                })
+                .orElseThrow(() -> new BadResourceExcepion("user with id " +body.getUserId() + " not found")));
     }
 }

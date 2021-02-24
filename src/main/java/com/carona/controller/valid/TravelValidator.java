@@ -1,7 +1,6 @@
 package com.carona.controller.valid;
 
 import com.carona.dto.TravelDTO;
-import com.carona.dto.UserDTO;
 import com.carona.error.BadResourceExcepion;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

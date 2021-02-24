@@ -36,7 +36,7 @@ public class PassangerServiceTest extends CaronaApplicationTests {
     }
 
     @Test
-    public void givenUserInvalidWhenToSaveThenReturnBadResourceExcepion(){
+    public void givenUserInvalidWhenToSaveThenReturnExcepion(){
         Long idInvalid =  1l;
 
         PassangerDTO passangerDTO = new PassangerDTO(idInvalid);
@@ -45,6 +45,22 @@ public class PassangerServiceTest extends CaronaApplicationTests {
             Optional<Passanger> entity = service.save(passangerDTO);
         }catch (BadResourceExcepion e){
             assertThat("user with id " +idInvalid + " not found").isEqualTo(e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenDuplicatePassangerWhenToSaveThenReturnExcepion(){
+        String email = "samira@teste.com";
+        UserDTO userDto = new UserDTO("samira", email );
+        Optional<User> user = userService.save(userDto);
+
+        service.save(new PassangerDTO(user.get().getId()));
+
+        try{
+            service.save(new PassangerDTO(user.get().getId()));
+
+        }catch (BadResourceExcepion e){
+            assertThat("Passanger already registered: " + email).isEqualTo(e.getMessage());
         }
     }
 }

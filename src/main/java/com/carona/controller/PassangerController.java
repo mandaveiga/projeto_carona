@@ -30,12 +30,11 @@ public class PassangerController {
     public ResponseEntity<Passanger> create(@RequestBody PassangerDTO body, @NotNull BindingResult result){
         validator.validate(body, result);
 
-        Optional<Passanger> entity = service.save(body);
+        Optional<Passanger> entityOptional = service.save(body);
 
-        if(!entity.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        return entityOptional.map((entity)->{
+            return ResponseEntity.status(HttpStatus.CREATED).body(entity);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(entity.get());
+        }).orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }

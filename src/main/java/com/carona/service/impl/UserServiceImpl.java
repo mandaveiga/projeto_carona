@@ -19,15 +19,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> save(UserDTO body) {
-        Optional<User> user = userRepository.findByEmail(body.getEmail());
+        Optional<User> userOptional = userRepository.findByEmail(body.getEmail());
 
-        if(user.isPresent()){
-            throw new BadResourceExcepion("User already registered: "+ body.getEmail());
-        }
+        return Optional.of((User) userOptional.map((user -> {
+            throw new BadResourceExcepion("User already registered: " + body.getEmail());
 
-        User entity = userRepository.save(new User(body.getName(), body.getEmail()));
-
-        return Optional.ofNullable(entity);
+        })).orElse(userRepository.save(new User(body.getName(), body.getEmail()))));
     }
 
     @Override

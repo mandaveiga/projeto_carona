@@ -24,14 +24,14 @@ public class UserController {
     private UserService service;
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody UserDTO body, @NotNull BindingResult result) {
+    public ResponseEntity<User> create(@RequestBody UserDTO body, @NotNull BindingResult result) {
         validator.validate(body, result);
 
-        Optional<User> entity = service.save(body);
+        Optional<User> entityOptional = service.save(body);
 
-        if(!entity.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+        return entityOptional.map((entity)->{
+            return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+
+        }).orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }
