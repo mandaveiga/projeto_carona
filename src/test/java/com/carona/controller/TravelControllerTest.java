@@ -1,22 +1,18 @@
 package com.carona.controller;
 
 import com.carona.CaronaApplicationTests;
-import com.carona.dto.DriverDTO;
-import com.carona.dto.PassangerDTO;
-import com.carona.dto.UserDTO;
-import com.carona.entity.Driver;
-import com.carona.entity.Passanger;
-import com.carona.entity.User;
-import com.carona.service.DriverService;
-import com.carona.service.PassangerService;
-import com.carona.service.UserService;
+import com.carona.dto.*;
+import com.carona.entity.*;
+import com.carona.service.*;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
-import org.json.JSONException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,22 +30,37 @@ public class TravelControllerTest extends CaronaApplicationTests {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TravelService service;
 
-    @Test
-    public void givenTravelWhenToSaveThenReturnCreated() {
+    private Optional<Driver> driver;
+
+    private Optional<Passanger> passanger;
+
+    private Optional<Travel> travel;
+
+    @BeforeEach
+    void init(){
         Optional<User> user1 = userService.save(new UserDTO("maicon" , "maicon@teste.com"));
         Optional<User> user2 = userService.save(new UserDTO("caio", "caio@teste.com"));
 
-        Optional<Passanger> passanger = passangerService.save(new PassangerDTO(user1.get().getId()));
-        Optional<Driver> driver = driverService.save(new DriverDTO(user2.get().getId()));
+        this.passanger = passangerService.save(new PassangerDTO(user1.get().getId()));
+        List<Long> passangersId = new ArrayList<>();
 
+        this.driver = driverService.save(new DriverDTO(user2.get().getId()));
+
+        this.travel = service.save(new TravelDTO(10L , 3 , driver.get().getId() , passangersId));
+
+    }
+
+    @Test
+    public void givenTravelWhenToSaveThenReturnCreated() {
         String body = "{\n" +
                 "\t\"value\": 7,\n" +
-                "\t\"open:\": false,\n" +
                 "\t\"maxPassangers\": 2,\n" +
-                "\t\"driverId\": "+ driver.get().getId() +",\n" +
+                "\t\"driverId\": "+ this.driver.get().getId() +",\n" +
                 "\t\"passangers\": [\n" +
-                "\t\t"+passanger.get().getId()+"\n" +
+                "\t\t"+this.passanger.get().getId()+"\n" +
                 "\t]\n" +
                 "\n" +
                 "}";
@@ -60,29 +71,24 @@ public class TravelControllerTest extends CaronaApplicationTests {
                 .post(recurso)
                 .then().extract().statusCode();
 
-        assertThat(statusCode).isEqualTo(HttpStatus.CREATED);
+        assertThat(statusCode).isEqualTo(HttpStatus.CREATED.value());
     }
 
     @Test
     public void giveTravelWhenToSaveThenReturnTravel(){
-        Optional<User> user1 = userService.save(new UserDTO("sara" , "sara@teste.com"));
-        Optional<User> user2 = userService.save(new UserDTO("lara", "lara@teste.com"));
-
-        Optional<Passanger> passanger = passangerService.save(new PassangerDTO(user1.get().getId()));
-        Optional<Driver> driver = driverService.save(new DriverDTO(user2.get().getId()));
+        Long driverId = this.driver.get().getId();
 
         String body = "{\n" +
                 "\t\"value\": 7,\n" +
-                "\t\"open:\": false,\n" +
                 "\t\"maxPassangers\": 2,\n" +
-                "\t\"driverId\": "+ driver.get().getId() +",\n" +
+                "\t\"driverId\": "+ driverId +",\n" +
                 "\t\"passangers\": [\n" +
-                "\t\t"+passanger.get().getId()+"\n" +
+                "\t\t"+this.passanger.get().getId()+"\n" +
                 "\t]\n" +
                 "\n" +
                 "}";
 
-        Long driveIdRequest = RestAssured.given().body(body)
+        Integer IdRequest = RestAssured.given().body(body)
                 .when()
                 .contentType(ContentType.JSON)
                 .post(recurso)
@@ -90,7 +96,7 @@ public class TravelControllerTest extends CaronaApplicationTests {
                 .extract()
                 .path("driver.id");
 
-        assertThat(driveIdRequest).isEqualTo(driver.get().getId());
+        assertThat(IdRequest.longValue()).isEqualTo(driverId);
     }
 
     @Test
@@ -151,4 +157,34 @@ public class TravelControllerTest extends CaronaApplicationTests {
         assertThat(statusCode).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
+    @Test
+    public void givenDriverIdWhenClosedThenReturnOk(){
+        recurso = recurso + "/closed/1";
+
+        Integer statusCode = RestAssured.given()
+                .when()
+                .contentType(ContentType.JSON)
+                .get(recurso)
+                .then()
+                .extract().statusCode();
+
+        assertThat(statusCode).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void givenDriverIdWhenClosedThenReturnTravel(){
+        Long idRequest = this.travel.get().getId();
+
+        recurso = recurso + "/closed/"+idRequest;
+
+        Integer driverid = RestAssured.given()
+                .when()
+                .contentType(ContentType.JSON)
+                .get(recurso)
+                .then()
+                .extract()
+                .path("driver.id");
+
+        assertThat(idRequest).isEqualTo(driverid.longValue());
+    }
 }

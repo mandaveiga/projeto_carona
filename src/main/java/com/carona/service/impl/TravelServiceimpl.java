@@ -47,4 +47,18 @@ public class TravelServiceimpl implements TravelService {
 
         return Optional.ofNullable(repository.save(new Travel(body.getValue(), true, body.getMaxPassangers(), passangers, driver.get())));
     }
+
+    @Override
+    public Optional<Travel> closed (Long id) {
+        Optional<Travel> travelOptional = repository.findById(id);
+
+        travelOptional.map(d-> {
+            return Optional.of(d);
+        }).orElseThrow(()-> new BadResourceExcepion("Travel with id " + id + " not found"));
+
+        travelOptional.get().setOpen(false);
+
+       return Optional.ofNullable(repository.save(travelOptional.get()));
+
+    }
 }

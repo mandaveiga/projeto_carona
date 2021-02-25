@@ -1,14 +1,10 @@
 package com.carona.service;
 
 import com.carona.CaronaApplicationTests;
-import com.carona.dto.DriverDTO;
-import com.carona.dto.PassangerDTO;
-import com.carona.dto.TravelDTO;
-import com.carona.dto.UserDTO;
-import com.carona.entity.Driver;
-import com.carona.entity.Passanger;
-import com.carona.entity.Travel;
+import com.carona.dto.*;
+import com.carona.entity.*;
 import com.carona.error.BadResourceExcepion;
+import com.carona.repository.TravelRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +86,16 @@ public class TravelsServiceTest extends CaronaApplicationTests {
         }catch (BadResourceExcepion e){
             assertThat("driver with id "+ driverInvalid +" not found").isEqualTo(e.getMessage());
         }
+    }
+
+    @Test
+    public void givenTravelIdWhenClosedThenClosed(){
+        Optional<Travel> travel = service.save(new TravelDTO(17L, 3, driver.get().getId(), passangers));
+
+        Long idBody = travel.get().getId();
+
+        Optional<Travel> entity = service.closed(idBody);
+
+        assertThat(entity.get().isOpen()).isEqualTo(false);
     }
 }

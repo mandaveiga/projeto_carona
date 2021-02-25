@@ -2,7 +2,6 @@ package com.carona.service;
 
 import com.carona.CaronaApplicationTests;
 import com.carona.dto.DriverDTO;
-import com.carona.dto.PassangerDTO;
 import com.carona.dto.UserDTO;
 import com.carona.entity.Driver;
 import com.carona.entity.User;
