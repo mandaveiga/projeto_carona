@@ -35,7 +35,7 @@ public class TravelController {
     }
 
     @GetMapping("/closed/{id}")
-    public ResponseEntity<Travel> create(@PathVariable Long id){
+    public ResponseEntity<Travel> closed(@PathVariable Long id){
         Optional<Travel> entityOptional = service.closed(id);
 
         return entityOptional.map((entity)->{
